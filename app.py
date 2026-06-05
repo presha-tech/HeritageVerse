@@ -38,6 +38,13 @@ def map_page():
         "map.html"
     )
 
+@app.route("/sphere")
+def sphere():
+
+    return render_template(
+        "sphere.html"
+    )
+
 if __name__=="__main__":
 
     app.run(

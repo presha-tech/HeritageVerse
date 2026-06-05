@@ -17,13 +17,9 @@ HeritageVerse
 <style>
 
 *{
-
 margin:0;
-
 padding:0;
-
 box-sizing:border-box;
-
 }
 
 body{
@@ -39,14 +35,11 @@ rgba(0,0,0,0.55),
 rgba(0,0,0,0.55)
 ),
 
-url("{{ url_for('static', filename='chatt.jpeg') }}");
+url("{{ url_for('static', filename='greenarc.jpeg') }}");
 
 background-size:cover;
-
 background-position:center;
-
 background-repeat:no-repeat;
-
 background-attachment:fixed;
 
 color:white;
@@ -54,9 +47,7 @@ color:white;
 padding:50px;
 
 display:flex;
-
 justify-content:center;
-
 align-items:center;
 
 }
@@ -64,12 +55,9 @@ align-items:center;
 .main{
 
 width:100%;
-
-max-width:1200px;
+max-width:1400px;
 
 text-align:center;
-
-backdrop-filter:blur(4px);
 
 }
 
@@ -82,7 +70,6 @@ margin-bottom:15px;
 color:#EAD7A4;
 
 text-shadow:
-
 2px 2px 15px rgba(0,0,0,.7);
 
 }
@@ -99,26 +86,25 @@ color:#EEEEEE;
 
 .container{
 
-display:grid;
+display:flex;
 
-grid-template-columns:
+flex-wrap:wrap;
 
-repeat(
-
-auto-fit,
-
-minmax(240px,1fr)
-
-);
+justify-content:center;
 
 gap:28px;
+
+max-width:950px;
+
+margin:0 auto;
 
 }
 
 .card{
 
-background:
+width:280px;
 
+background:
 rgba(255,255,255,.10);
 
 padding:35px;
@@ -133,12 +119,37 @@ font-size:1.25rem;
 
 font-weight:600;
 
-backdrop-filter:
-
-blur(14px);
+backdrop-filter:blur(14px);
 
 border:
+1px solid rgba(255,255,255,0.18);
 
+transition:.28s;
+
+box-shadow:
+0 10px 25px rgba(0,0,0,0.28);
+
+}
+.card{
+
+background:
+rgba(255,255,255,.10);
+
+padding:35px;
+
+border-radius:22px;
+
+text-decoration:none;
+
+color:white;
+
+font-size:1.25rem;
+
+font-weight:600;
+
+backdrop-filter:blur(14px);
+
+border:
 1px solid rgba(
 255,
 255,
@@ -149,9 +160,7 @@ border:
 transition:.28s;
 
 box-shadow:
-
 0 10px 25px
-
 rgba(
 0,
 0,
@@ -164,11 +173,9 @@ rgba(
 .card:hover{
 
 transform:
-
 translateY(-6px);
 
 background:
-
 rgba(
 200,
 132,
@@ -205,15 +212,15 @@ opacity:.92;
 @media(max-width:700px){
 
 body{
-
 padding:30px;
-
 }
 
 h1{
-
 font-size:2.8rem;
+}
 
+.container{
+grid-template-columns:1fr;
 }
 
 }
@@ -227,15 +234,11 @@ font-size:2.8rem;
 <div class="main">
 
 <h1>
-
 HeritageVerse
-
 </h1>
 
 <p class="subtitle">
-
 AI Powered Cultural Heritage Platform
-
 </p>
 
 <div class="container">
@@ -245,17 +248,13 @@ class="card"
 href="/monument">
 
 <span class="icon">
-
 🏛
-
 </span>
 
 Monument AI
 
 <div class="desc">
-
 Identify monuments instantly using AI vision.
-
 </div>
 
 </a>
@@ -265,17 +264,13 @@ class="card"
 href="/translator">
 
 <span class="icon">
-
 🎙
-
 </span>
 
 Voice Translator
 
 <div class="desc">
-
 Translate heritage content into Indian languages.
-
 </div>
 
 </a>
@@ -285,17 +280,13 @@ class="card"
 href="/photobooth">
 
 <span class="icon">
-
 📸
-
 </span>
 
 CulturaCam
 
 <div class="desc">
-
 Create heritage themed photos instantly.
-
 </div>
 
 </a>
@@ -305,17 +296,29 @@ class="card"
 href="/map">
 
 <span class="icon">
-
 🗺
-
 </span>
 
 Heritage Map
 
 <div class="desc">
-
 Explore monuments on an interactive cultural map.
+</div>
 
+</a>
+
+<a
+class="card"
+href="/sphere">
+
+<span class="icon">
+🌐
+</span>
+
+Sanskriti Sphere AI
+
+<div class="desc">
+Ask questions about Indian heritage using AI-powered cultural knowledge.
 </div>
 
 </a>
