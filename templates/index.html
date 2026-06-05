@@ -1,332 +1,194 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta
-name="viewport"
-content="width=device-width,initial-scale=1.0">
-
-<title>
-HeritageVerse
-</title>
-
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>HeritageVerse</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
 <style>
+*{margin:0;padding:0;box-sizing:border-box;}
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
+:root{
+  --gold:#EAD7A4;
+  --gold-deep:#C8843A;
+  --cream:#F5EDD6;
+  --glass:rgba(255,255,255,0.08);
+  --glass-border:rgba(255,255,255,0.15);
 }
+
+html,body{width:100%;overflow-x:hidden;}
 
 body{
-
-font-family:sans-serif;
-
-min-height:100vh;
-
-background:
-
-linear-gradient(
-rgba(0,0,0,0.55),
-rgba(0,0,0,0.55)
-),
-
-url("{{ url_for('static', filename='greenarc.jpeg') }}");
-
-background-size:cover;
-background-position:center;
-background-repeat:no-repeat;
-background-attachment:fixed;
-
-color:white;
-
-padding:50px;
-
-display:flex;
-justify-content:center;
-align-items:center;
-
+  font-family:'Crimson Pro',Georgia,serif;
+  min-height:100vh;
+  background:
+    linear-gradient(160deg,rgba(10,6,2,0.72) 0%,rgba(30,15,5,0.65) 100%),
+    url("{{ url_for('static', filename='greenarc.jpeg') }}");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:clamp(16px,4vw,60px) clamp(12px,3vw,50px);
+  min-height:100dvh;
 }
 
-.main{
+/* Fix background on iOS */
+@supports(-webkit-touch-callout:none){body{background-attachment:scroll;}}
 
-width:100%;
-max-width:1400px;
+.main{width:100%;max-width:1300px;text-align:center;padding:0 clamp(0px,1vw,8px);}
 
-text-align:center;
-
-}
+/* Ornamental divider */
+.ornament{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:18px;opacity:0.7;}
+.ornament-line{height:1px;width:clamp(40px,8vw,80px);background:linear-gradient(to right,transparent,var(--gold));}
+.ornament-line.right{background:linear-gradient(to left,transparent,var(--gold));}
+.ornament-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);}
 
 h1{
-
-font-size:4rem;
-
-margin-bottom:15px;
-
-color:#EAD7A4;
-
-text-shadow:
-2px 2px 15px rgba(0,0,0,.7);
-
+  font-family:'Cinzel',serif;
+  font-size:clamp(2.2rem,6vw,4.5rem);
+  font-weight:700;
+  letter-spacing:0.04em;
+  color:var(--gold);
+  text-shadow:0 2px 30px rgba(200,132,58,0.4),2px 2px 0 rgba(0,0,0,0.5);
+  line-height:1.1;
+  margin-bottom:14px;
+  animation:fadeDown 0.8s ease both;
 }
 
 .subtitle{
-
-font-size:1.1rem;
-
-margin-bottom:55px;
-
-color:#EEEEEE;
-
+  font-family:'Crimson Pro',serif;
+  font-style:italic;
+  font-size:clamp(1rem,2.2vw,1.25rem);
+  font-weight:300;
+  color:rgba(245,237,214,0.85);
+  letter-spacing:0.08em;
+  margin-bottom:clamp(30px,5vw,55px);
+  animation:fadeDown 0.8s 0.15s ease both;
 }
 
+/* --- Responsive Grid --- */
 .container{
-
-display:flex;
-
-flex-wrap:wrap;
-
-justify-content:center;
-
-gap:28px;
-
-max-width:950px;
-
-margin:0 auto;
-
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));
+  gap:clamp(12px,2.5vw,24px);
+  max-width:1100px;
+  margin:0 auto;
+  width:100%;
 }
 
+/* Desktop: all 5 in a row */
+@media(min-width:1000px){
+  .container{grid-template-columns:repeat(5,1fr);}
+}
+
+/* Tablet landscape: 3 cols */
+@media(min-width:700px) and (max-width:999px){
+  .container{grid-template-columns:repeat(3,1fr);max-width:720px;}
+  .card:nth-child(4){grid-column:1/2;}
+  .card:nth-child(5){grid-column:2/3;}
+}
+
+/* Tablet portrait: 2 cols */
+@media(min-width:480px) and (max-width:699px){
+  .container{grid-template-columns:repeat(2,1fr);max-width:560px;}
+  .card:last-child{grid-column:1/-1;max-width:clamp(200px,55%,280px);margin:0 auto;width:100%;}
+}
+
+/* Mobile: single column, full width */
+@media(max-width:479px){
+  .container{grid-template-columns:1fr;max-width:100%;}
+  .card{max-width:100%;}
+}
+
+/* --- Cards --- */
 .card{
-
-width:280px;
-
-background:
-rgba(255,255,255,.10);
-
-padding:35px;
-
-border-radius:22px;
-
-text-decoration:none;
-
-color:white;
-
-font-size:1.25rem;
-
-font-weight:600;
-
-backdrop-filter:blur(14px);
-
-border:
-1px solid rgba(255,255,255,0.18);
-
-transition:.28s;
-
-box-shadow:
-0 10px 25px rgba(0,0,0,0.28);
-
+  background:var(--glass);
+  padding:clamp(20px,3.5vw,32px) clamp(16px,3vw,26px);
+  border-radius:18px;
+  text-decoration:none;
+  color:white;
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--glass-border);
+  transition:transform 0.28s ease,background 0.28s ease,box-shadow 0.28s ease;
+  box-shadow:0 8px 30px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.1);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  animation:fadeUp 0.7s ease both;
+  position:relative;
+  overflow:hidden;
 }
-.card{
-
-background:
-rgba(255,255,255,.10);
-
-padding:35px;
-
-border-radius:22px;
-
-text-decoration:none;
-
-color:white;
-
-font-size:1.25rem;
-
-font-weight:600;
-
-backdrop-filter:blur(14px);
-
-border:
-1px solid rgba(
-255,
-255,
-255,
-0.18
-);
-
-transition:.28s;
-
-box-shadow:
-0 10px 25px
-rgba(
-0,
-0,
-0,
-0.28
-);
-
+.card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(234,215,164,0.5),transparent);
 }
-
+.card:nth-child(1){animation-delay:0.25s}
+.card:nth-child(2){animation-delay:0.35s}
+.card:nth-child(3){animation-delay:0.45s}
+.card:nth-child(4){animation-delay:0.55s}
+.card:nth-child(5){animation-delay:0.65s}
 .card:hover{
-
-transform:
-translateY(-6px);
-
-background:
-rgba(
-200,
-132,
-58,
-0.88
-);
-
+  transform:translateY(-7px);
+  background:rgba(200,132,58,0.82);
+  box-shadow:0 18px 40px rgba(200,132,58,0.35),0 4px 15px rgba(0,0,0,0.4);
+  border-color:rgba(234,215,164,0.4);
 }
 
-.icon{
+.icon{display:block;font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:12px;line-height:1;}
+.card-title{font-family:'Cinzel',serif;font-size:clamp(0.85rem,1.4vw,1rem);font-weight:600;letter-spacing:0.03em;text-align:center;line-height:1.3;}
+.desc{margin-top:10px;font-family:'Crimson Pro',serif;font-size:clamp(0.85rem,1.3vw,0.95rem);font-weight:300;line-height:1.55;opacity:0.88;text-align:center;}
 
-display:block;
+.footer-note{margin-top:clamp(24px,4vw,40px);font-family:'Crimson Pro',serif;font-style:italic;font-size:0.82rem;color:rgba(234,215,164,0.45);letter-spacing:0.06em;animation:fadeDown 1s 0.9s ease both;}
 
-font-size:2.3rem;
-
-margin-bottom:15px;
-
-}
-
-.desc{
-
-margin-top:12px;
-
-font-size:.9rem;
-
-font-weight:400;
-
-line-height:1.6;
-
-opacity:.92;
-
-}
-
-@media(max-width:700px){
-
-body{
-padding:30px;
-}
-
-h1{
-font-size:2.8rem;
-}
-
-.container{
-grid-template-columns:1fr;
-}
-
-}
-
+@keyframes fadeDown{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
-
 </head>
-
 <body>
-
 <div class="main">
-
-<h1>
-HeritageVerse
-</h1>
-
-<p class="subtitle">
-AI Powered Cultural Heritage Platform
-</p>
-
-<div class="container">
-
-<a
-class="card"
-href="/monument">
-
-<span class="icon">
-🏛
-</span>
-
-Monument AI
-
-<div class="desc">
-Identify monuments instantly using AI vision.
+  <div class="ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-dot"></div>
+    <div class="ornament-dot" style="width:8px;height:8px;opacity:0.7"></div>
+    <div class="ornament-dot"></div>
+    <div class="ornament-line right"></div>
+  </div>
+  <h1>HeritageVerse</h1>
+  <p class="subtitle">AI Powered Cultural Heritage Platform</p>
+  <div class="container">
+    <a class="card" href="/monument">
+      <span class="icon">🏛️</span>
+      <span class="card-title">Monument AI</span>
+      <div class="desc">Identify monuments instantly using AI vision.</div>
+    </a>
+    <a class="card" href="/translator">
+      <span class="icon">🎙️</span>
+      <span class="card-title">Voice Translator</span>
+      <div class="desc">Translate heritage content into Indian languages.</div>
+    </a>
+    <a class="card" href="/photobooth">
+      <span class="icon">📸</span>
+      <span class="card-title">CulturaCam</span>
+      <div class="desc">Create heritage themed photos instantly.</div>
+    </a>
+    <a class="card" href="/map">
+      <span class="icon">🗺️</span>
+      <span class="card-title">Heritage Map</span>
+      <div class="desc">Explore monuments on an interactive cultural map.</div>
+    </a>
+    <a class="card" href="/sphere">
+      <span class="icon">🌐</span>
+      <span class="card-title">Sanskriti Sphere AI</span>
+      <div class="desc">Ask questions about Indian heritage using AI-powered cultural knowledge.</div>
+    </a>
+  </div>
+  <p class="footer-note">Preserving the past · Powering the future</p>
 </div>
-
-</a>
-
-<a
-class="card"
-href="/translator">
-
-<span class="icon">
-🎙
-</span>
-
-Voice Translator
-
-<div class="desc">
-Translate heritage content into Indian languages.
-</div>
-
-</a>
-
-<a
-class="card"
-href="/photobooth">
-
-<span class="icon">
-📸
-</span>
-
-CulturaCam
-
-<div class="desc">
-Create heritage themed photos instantly.
-</div>
-
-</a>
-
-<a
-class="card"
-href="/map">
-
-<span class="icon">
-🗺
-</span>
-
-Heritage Map
-
-<div class="desc">
-Explore monuments on an interactive cultural map.
-</div>
-
-</a>
-
-<a
-class="card"
-href="/sphere">
-
-<span class="icon">
-🌐
-</span>
-
-Sanskriti Sphere AI
-
-<div class="desc">
-Ask questions about Indian heritage using AI-powered cultural knowledge.
-</div>
-
-</a>
-
-</div>
-
-</div>
-
 </body>
-
 </html>
